@@ -1,0 +1,54 @@
+POST http://localhost:5055/api/VideoGames
+Content-Type: application/json
+
+{
+  "title": "Ghost of Tsushima",
+  "platform": "PC",
+  "developer": "Sucker Punch",
+  "publisher": "Sony"
+}
+###
+GET http://localhost:5055/api/VideoGames/1
+###
+DELETE http://localhost:5055/api/VideoGames/1
+###
+POST http://localhost:5055/api/VideoGames
+Content-Type: application/json
+
+{
+  "title": "Cyberpunk 2077",
+  "platform": "PC",
+  "developer": "CD Projekt Red",
+  "publisher": "CD Projekt"
+}
+###
+PUT http://localhost:5055/api/VideoGames/2
+Content-Type: application/json
+
+{
+  "id": 2,
+  "title": "Cyberpunk 2077",
+  "platform": "PlayStation 5",
+  "developer": "CD Projekt Red",
+  "publisher": "CD Projekt"
+}
+###
+POST http://localhost:5055/api/VideoGames
+Content-Type: application/json
+
+{
+  "title": "The Witcher 3: Wild Hunt",
+  "platform": "PC",
+  "developer": "CD Projekt Red",
+  "publisher": "CD Projekt"
+}
+###
+PUT http://localhost:5055/api/VideoGames/3
+Content-Type: application/json
+
+{
+  "title": "The Witcher 3: Wild Hunt",
+  "platform": "PlayStation 5",
+  "developer": "CD Projekt Red",
+  "publisher": "CD Projekt"
+}
