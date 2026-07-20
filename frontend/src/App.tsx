@@ -72,7 +72,7 @@ function App() {
       })
       .catch(err => {
         console.error(err);
-        alert("Backend sunucusuna bağlanılamadı. Lütfen Rider üzerinden C# projenizin çalıştığından emin olun.");
+        alert("Could not connect to the backend server. Please make sure your C# API project is running in Rider.");
         setLoading(false);
       });
   };
@@ -83,7 +83,7 @@ function App() {
 
   const handleAddGame = () => {
     if (newTitle.trim() === '' || newPublisherId === 0 || newDeveloperIds.length === 0 || newPlatformIds.length === 0) {
-      alert("Lütfen oyun adı, yayıncı ve en az birer geliştirici/platform seçiniz!");
+      alert("Please enter a game title, select a publisher, and pick at least one developer and platform!");
       return;
     }
 
@@ -116,10 +116,10 @@ function App() {
           setShowNewPlats(false);
           setShowGameForm(false);
         } else {
-          alert("Oyun eklenemedi. Veritabanı veya sunucu hatası.");
+          alert("Failed to add game. A database or server error occurred.");
         }
       })
-      .catch(() => alert("Sunucuya erişilemiyor. Lütfen Rider üzerinden projeyi başlatın."));
+      .catch(() => alert("Cannot reach the server. Please start the API in Rider."));
   };
 
   const handleStartEdit = (game: VideoGameReadDto) => {
@@ -148,7 +148,7 @@ function App() {
 
   const handleUpdateGame = (id: number) => {
     if (editTitle.trim() === '' || editPublisherId === 0 || editDeveloperIds.length === 0 || editPlatformIds.length === 0) {
-      alert("Lütfen oyun adı, yayıncı ve en az birer geliştirici/platform seçiniz!");
+      alert("Please enter a game title, select a publisher, and pick at least one developer and platform!");
       return;
     }
 
@@ -173,10 +173,10 @@ function App() {
           fetchAllData();
           setEditingId(null);
         } else {
-          alert("Güncelleme işlemi başarısız oldu.");
+          alert("Update failed.");
         }
       })
-      .catch(() => alert("Sunucuya erişilemiyor. Lütfen Rider üzerinden projeyi başlatın."));
+      .catch(() => alert("Cannot reach the server. Please start the API in Rider."));
   };
 
   const handleDeleteGame = (id: number) => {
@@ -185,10 +185,10 @@ function App() {
         if (res.ok || res.status === 404) {
           setGames(games.filter(g => g.id !== id));
         } else {
-          alert("Silme işlemi başarısız oldu.");
+          alert("Failed to delete the game.");
         }
       })
-      .catch(() => alert("Sunucuya erişilemiyor. Lütfen Rider üzerinden projeyi başlatın."));
+      .catch(() => alert("Cannot reach the server. Please start the API in Rider."));
   };
 
   const handleAddLookupItem = (type: 'Publishers' | 'Developers' | 'Platforms') => {
@@ -209,11 +209,11 @@ function App() {
           setNewItemName('');
           setNewDevFoundedDate('');
         } else {
-          alert("Ekleme başarısız! Sunucu tarafında bir hata oluştu.");
+          alert("Failed to add item! A server error occurred.");
         }
       })
       .catch(() => {
-        alert("Backend sunucusuna bağlanılamadı! Lütfen Rider üzerinden 5055 portunun çalıştığından emin olun.");
+        alert("Could not connect to the backend server! Please check port 5055.");
       });
   };
 
@@ -223,10 +223,10 @@ function App() {
         if (res.ok || res.status === 404) {
           fetchAllData();
         } else {
-          alert("Silme işlemi başarısız. Bu veriye bağlı bir oyun olabilir.");
+          alert("Deletion failed. There might be a game linked to this record.");
         }
       })
-      .catch(() => alert("Sunucuya erişilemiyor. Lütfen Rider üzerinden projeyi başlatın."));
+      .catch(() => alert("Cannot reach the server. Please start the API in Rider."));
   };
 
   const toggleCheckbox = (id: number, currentList: number[], setList: (val: number[]) => void) => {
@@ -246,34 +246,34 @@ function App() {
 
   return (
     <div>
-      <h1 className="main-title">Oyun Kütüphanesi ve RDBMS Yönetimi</h1>
+      <h1 className="main-title">Video Game Library</h1>
 
       <div className="nav-tabs">
-        <button className={`action-btn ${activeTab === 'games' ? 'active' : ''}`} onClick={() => setActiveTab('games')}>Oyunlar ({games.length})</button>
-        <button className={`action-btn ${activeTab === 'publishers' ? 'active' : ''}`} onClick={() => setActiveTab('publishers')}>Yayıncılar ({publishers.length})</button>
-        <button className={`action-btn ${activeTab === 'developers' ? 'active' : ''}`} onClick={() => setActiveTab('developers')}>Geliştiriciler ({developers.length})</button>
-        <button className={`action-btn ${activeTab === 'platforms' ? 'active' : ''}`} onClick={() => setActiveTab('platforms')}>Platformlar ({platforms.length})</button>
+        <button className={`action-btn ${activeTab === 'games' ? 'active' : ''}`} onClick={() => setActiveTab('games')}>Games ({games.length})</button>
+        <button className={`action-btn ${activeTab === 'publishers' ? 'active' : ''}`} onClick={() => setActiveTab('publishers')}>Publishers ({publishers.length})</button>
+        <button className={`action-btn ${activeTab === 'developers' ? 'active' : ''}`} onClick={() => setActiveTab('developers')}>Developers ({developers.length})</button>
+        <button className={`action-btn ${activeTab === 'platforms' ? 'active' : ''}`} onClick={() => setActiveTab('platforms')}>Platforms ({platforms.length})</button>
       </div>
 
       {loading ? (
-        <p>Veriler yükleniyor...</p>
+        <p>Loading data...</p>
       ) : (
         <>
           {activeTab === 'games' && (
             <div>
               <div style={{ marginBottom: '25px' }}>
                 <button className="action-btn" onClick={() => setShowGameForm(!showGameForm)}>
-                  {showGameForm ? 'Formu Gizle' : 'Yeni Oyun Ekle'}
+                  {showGameForm ? 'Hide Form' : 'Add New Game'}
                 </button>
 
                 {showGameForm && (
                   <div className="form-card">
-                    <h3 style={{ marginTop: 0, marginBottom: '20px', borderBottom: '1px solid #444', paddingBottom: '10px' }}>Yeni Oyun Kaydı</h3>
+                    <h3 style={{ marginTop: 0, marginBottom: '20px', borderBottom: '1px solid #444', paddingBottom: '10px' }}>New Game Entry</h3>
                     
                     <div style={{ display: 'flex', gap: '15px' }}>
                       <input
                         type="text"
-                        placeholder="Oyun Adı (Örn: The Witcher 3)"
+                        placeholder="Game Title (E.g., The Witcher 3)"
                         value={newTitle}
                         onChange={(e) => setNewTitle(e.target.value)}
                         className="form-input"
@@ -281,7 +281,7 @@ function App() {
                       />
                       <input
                         type="number"
-                        placeholder="Fiyat ($) - Örn: 59.99"
+                        placeholder="Price ($) - E.g., 59.99"
                         value={newPrice}
                         onChange={(e) => setNewPrice(e.target.value)}
                         className="form-input"
@@ -297,11 +297,11 @@ function App() {
                           onChange={(e) => setNewIsReleased(e.target.checked)}
                           style={{ width: '18px', height: '18px', accentColor: '#9c27b0' }}
                         />
-                        Piyasaya Çıktı mı?
+                        Is Released?
                       </label>
 
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: 1 }}>
-                        <span style={{ color: '#aaa', fontWeight: 'bold', whiteSpace: 'nowrap' }}>Çıkış Tarihi:</span>
+                        <span style={{ color: '#aaa', fontWeight: 'bold', whiteSpace: 'nowrap' }}>Release Date:</span>
                         <input
                           type="date"
                           value={newReleaseDate}
@@ -312,25 +312,25 @@ function App() {
                       </div>
                     </div>
 
-                    <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#aaa' }}>Yayıncı Seçin (1 Tane):</label>
+                    <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#aaa' }}>Select Publisher (Only 1):</label>
                     <select
                       value={newPublisherId}
                       onChange={(e) => setNewPublisherId(Number(e.target.value))}
                       className="form-select"
                     >
-                      <option value={0}>-- Lütfen Yayıncı Seçiniz --</option>
+                      <option value={0}>-- Please Select a Publisher --</option>
                       {publishers.map(p => (
                         <option key={p.id} value={p.id}>{p.name}</option>
                       ))}
                     </select>
 
-                    <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#aaa' }}>Geliştiricileri Seçin (Birden Fazla Olabilir):</label>
+                    <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#aaa' }}>Select Developer(s) (Multiple Allowed):</label>
                     <div
                       className="form-select"
                       style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: showNewDevs ? '5px' : '15px', userSelect: 'none' }}
                       onClick={() => setShowNewDevs(!showNewDevs)}
                     >
-                      <span>{newDeveloperIds.length === 0 ? "-- Geliştirici Seçmek İçin Tıklayın --" : `${newDeveloperIds.length} Geliştirici Seçildi`}</span>
+                      <span>{newDeveloperIds.length === 0 ? "-- Click to Select Developer(s) --" : `${newDeveloperIds.length} Developer(s) Selected`}</span>
                       <span>{showNewDevs ? "▲" : "▼"}</span>
                     </div>
                     {showNewDevs && (
@@ -349,13 +349,13 @@ function App() {
                       </div>
                     )}
 
-                    <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#aaa' }}>Platformları Seçin (Birden Fazla Olabilir):</label>
+                    <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#aaa' }}>Select Platform(s) (Multiple Allowed):</label>
                     <div
                       className="form-select"
                       style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: showNewPlats ? '5px' : '15px', userSelect: 'none' }}
                       onClick={() => setShowNewPlats(!showNewPlats)}
                     >
-                      <span>{newPlatformIds.length === 0 ? "-- Platform Seçmek İçin Tıklayın --" : `${newPlatformIds.length} Platform Seçildi`}</span>
+                      <span>{newPlatformIds.length === 0 ? "-- Click to Select Platform(s) --" : `${newPlatformIds.length} Platform(s) Selected`}</span>
                       <span>{showNewPlats ? "▲" : "▼"}</span>
                     </div>
                     {showNewPlats && (
@@ -375,7 +375,7 @@ function App() {
                     )}
 
                     <button className="action-btn" onClick={handleAddGame} style={{ width: '100%', backgroundColor: '#4CAF50', marginTop: '10px', fontSize: '1.1rem' }}>
-                      Oyunu Veritabanına Kaydet
+                      Save Game to Database
                     </button>
                   </div>
                 )}
@@ -383,14 +383,14 @@ function App() {
 
               <input
                 type="text"
-                placeholder="Kütüphanede oyun adı, yayıncı, geliştirici veya platform ara..."
+                placeholder="Search library by game title, publisher, developer, or platform..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="search-input"
               />
 
               {filteredGames.length === 0 ? (
-                <p style={{ color: '#888', fontSize: '1.1rem', marginTop: '30px' }}>Kütüphanede kayıtlı oyun bulunamadı.</p>
+                <p style={{ color: '#888', fontSize: '1.1rem', marginTop: '30px' }}>No games found in the library.</p>
               ) : (
                 <ul className="game-list">
                   {filteredGames.map((game) => (
@@ -398,13 +398,13 @@ function App() {
                       {editingId === game.id ? (
                         <div className="form-card" style={{ margin: '0', maxWidth: '100%', width: '100%', boxSizing: 'border-box' }}>
                           <h3 style={{ marginTop: 0, marginBottom: '20px', borderBottom: '1px solid #444', paddingBottom: '10px', color: '#e1bee7' }}>
-                            Oyunu Düzenle: {game.title}
+                            Edit Game: {game.title}
                           </h3>
 
                           <div style={{ display: 'flex', gap: '15px' }}>
                             <input
                               type="text"
-                              placeholder="Oyun Adı"
+                              placeholder="Game Title"
                               value={editTitle}
                               onChange={(e) => setEditTitle(e.target.value)}
                               className="form-input"
@@ -412,7 +412,7 @@ function App() {
                             />
                             <input
                               type="number"
-                              placeholder="Fiyat ($) - Örn: 59.99"
+                              placeholder="Price ($) - E.g., 59.99"
                               value={editPrice}
                               onChange={(e) => setEditPrice(e.target.value)}
                               className="form-input"
@@ -428,11 +428,11 @@ function App() {
                                 onChange={(e) => setEditIsReleased(e.target.checked)}
                                 style={{ width: '18px', height: '18px', accentColor: '#9c27b0' }}
                               />
-                              Piyasaya Çıktı mı?
+                              Is Released?
                             </label>
 
                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: 1 }}>
-                              <span style={{ color: '#aaa', fontWeight: 'bold', whiteSpace: 'nowrap' }}>Çıkış Tarihi:</span>
+                              <span style={{ color: '#aaa', fontWeight: 'bold', whiteSpace: 'nowrap' }}>Release Date:</span>
                               <input
                                 type="date"
                                 value={editReleaseDate}
@@ -443,25 +443,25 @@ function App() {
                             </div>
                           </div>
 
-                          <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#aaa' }}>Yayıncı Seçin:</label>
+                          <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#aaa' }}>Select Publisher:</label>
                           <select
                             value={editPublisherId}
                             onChange={(e) => setEditPublisherId(Number(e.target.value))}
                             className="form-select"
                           >
-                            <option value={0}>-- Lütfen Yayıncı Seçiniz --</option>
+                            <option value={0}>-- Please Select a Publisher --</option>
                             {publishers.map(p => (
                               <option key={p.id} value={p.id}>{p.name}</option>
                             ))}
                           </select>
 
-                          <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#aaa' }}>Geliştiricileri Seçin:</label>
+                          <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#aaa' }}>Select Developer(s):</label>
                           <div
                             className="form-select"
                             style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: showEditDevs ? '5px' : '15px', userSelect: 'none' }}
                             onClick={() => setShowEditDevs(!showEditDevs)}
                           >
-                            <span>{editDeveloperIds.length === 0 ? "-- Geliştirici Seçmek İçin Tıklayın --" : `${editDeveloperIds.length} Geliştirici Seçildi`}</span>
+                            <span>{editDeveloperIds.length === 0 ? "-- Click to Select Developer(s) --" : `${editDeveloperIds.length} Developer(s) Selected`}</span>
                             <span>{showEditDevs ? "▲" : "▼"}</span>
                           </div>
                           {showEditDevs && (
@@ -480,13 +480,13 @@ function App() {
                             </div>
                           )}
 
-                          <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#aaa' }}>Platformları Seçin:</label>
+                          <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '8px', color: '#aaa' }}>Select Platform(s):</label>
                           <div
                             className="form-select"
                             style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: showEditPlats ? '5px' : '15px', userSelect: 'none' }}
                             onClick={() => setShowEditPlats(!showEditPlats)}
                           >
-                            <span>{editPlatformIds.length === 0 ? "-- Platform Seçmek İçin Tıklayın --" : `${editPlatformIds.length} Platform Seçildi`}</span>
+                            <span>{editPlatformIds.length === 0 ? "-- Click to Select Platform(s) --" : `${editPlatformIds.length} Platform(s) Selected`}</span>
                             <span>{showEditPlats ? "▲" : "▼"}</span>
                           </div>
                           {showEditPlats && (
@@ -507,10 +507,10 @@ function App() {
 
                           <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
                             <button className="action-btn" onClick={() => handleUpdateGame(game.id)} style={{ backgroundColor: '#4CAF50', flex: 1 }}>
-                              Değişiklikleri Kaydet
+                              Save Changes
                             </button>
                             <button className="action-btn" onClick={() => setEditingId(null)} style={{ backgroundColor: '#757575', flex: 1 }}>
-                              İptal
+                              Cancel
                             </button>
                           </div>
                         </div>
@@ -520,18 +520,18 @@ function App() {
                             <h3 style={{ margin: '0 0 10px 0', fontSize: '1.4rem', color: '#fff' }}>
                               {game.title}{' '}
                               <span style={{ fontSize: '0.8rem', padding: '4px 8px', borderRadius: '4px', backgroundColor: game.isReleased ? '#1b5e20' : '#e65100', color: '#fff', verticalAlign: 'middle' }}>
-                                {game.isReleased ? 'Çıktı' : 'Çıkmadı'}
+                                {game.isReleased ? 'Released' : 'Unreleased'}
                               </span>
                             </h3>
                             <p style={{ margin: '0 0 6px 0', color: '#bbb' }}>
-                              <strong>Çıkış Tarihi:</strong> {game.releaseDate ? new Date(game.releaseDate).toLocaleDateString('tr-TR') : 'Belirtilmedi'} | <strong>Yayıncı:</strong> {game.publisherName} | <strong>Fiyat:</strong> <span style={{ color: '#4caf50', fontWeight: 'bold' }}>{game.price} $</span>
+                              <strong>Release Date:</strong> {game.releaseDate ? new Date(game.releaseDate).toLocaleDateString('en-US') : 'Not specified'} | <strong>Publisher:</strong> {game.publisherName} | <strong>Price:</strong> <span style={{ color: '#4caf50', fontWeight: 'bold' }}>{game.price} $</span>
                             </p>
-                            <p style={{ margin: '0 0 6px 0', color: '#bbb' }}><strong>Geliştirici(ler):</strong> {game.developerNames.join(', ')}</p>
+                            <p style={{ margin: '0 0 6px 0', color: '#bbb' }}><strong>Developer(s):</strong> {game.developerNames.join(', ')}</p>
                             <p style={{ margin: 0, color: '#bbb' }}><strong>Platform(lar):</strong> {game.platformNames.join(', ')}</p>
                           </div>
                           <div style={{ display: 'flex', gap: '10px' }}>
-                            <button className="action-btn" onClick={() => handleStartEdit(game)} style={{ backgroundColor: '#1976d2', padding: '10px 16px' }}>Düzenle</button>
-                            <button className="action-btn" onClick={() => handleDeleteGame(game.id)} style={{ backgroundColor: '#d32f2f', padding: '10px 16px' }}>Sil</button>
+                            <button className="action-btn" onClick={() => handleStartEdit(game)} style={{ backgroundColor: '#1976d2', padding: '10px 16px' }}>Edit</button>
+                            <button className="action-btn" onClick={() => handleDeleteGame(game.id)} style={{ backgroundColor: '#d32f2f', padding: '10px 16px' }}>Delete</button>
                           </div>
                         </div>
                       )}
@@ -544,11 +544,11 @@ function App() {
 
           {activeTab !== 'games' && (
             <div style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'left' }}>
-              <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Yeni {activeTab === 'publishers' ? 'Yayıncı' : activeTab === 'developers' ? 'Geliştirici' : 'Platform'} Ekle</h2>
+              <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Add New {activeTab === 'publishers' ? 'Publisher' : activeTab === 'developers' ? 'Developer' : 'Platform'}</h2>
               <div style={{ display: 'flex', gap: '10px', marginBottom: '25px', alignItems: 'center' }}>
                 <input
                   type="text"
-                  placeholder="İsim giriniz (Örn: Electronic Arts, Steam, PC)..."
+                  placeholder="Enter name (E.g., Electronic Arts, Steam, PC)..."
                   value={newItemName}
                   onChange={(e) => setNewItemName(e.target.value)}
                   className="form-input"
@@ -558,7 +558,7 @@ function App() {
                 {activeTab === 'developers' && (
                   <input
                     type="date"
-                    title="Kuruluş Tarihi"
+                    title="Founded Date"
                     value={newDevFoundedDate}
                     onChange={(e) => setNewDevFoundedDate(e.target.value)}
                     className="form-input"
@@ -571,7 +571,7 @@ function App() {
                   onClick={() => handleAddLookupItem(activeTab === 'publishers' ? 'Publishers' : activeTab === 'developers' ? 'Developers' : 'Platforms')}
                   style={{ backgroundColor: '#4CAF50', whiteSpace: 'nowrap' }}
                 >
-                  Ekle
+                  Add
                 </button>
               </div>
 
@@ -582,7 +582,7 @@ function App() {
                       <strong style={{ color: '#9c27b0' }}>#{item.id}</strong> - {item.name}
                       {item.foundedDate && (
                         <span style={{ fontSize: '0.85rem', color: '#aaa', marginLeft: '10px' }}>
-                          (Kuruluş: {new Date(item.foundedDate).toLocaleDateString('tr-TR')})
+                          (Founded: {new Date(item.foundedDate).toLocaleDateString('en-US')})
                         </span>
                       )}
                     </span>
@@ -591,7 +591,7 @@ function App() {
                       onClick={() => handleDeleteLookupItem(item.id, activeTab === 'publishers' ? 'Publishers' : activeTab === 'developers' ? 'Developers' : 'Platforms')}
                       style={{ backgroundColor: '#d32f2f', padding: '6px 12px', fontSize: '0.85rem' }}
                     >
-                      Sil
+                      Delete
                     </button>
                   </li>
                 ))}
