@@ -22,6 +22,7 @@ public partial class VideoGamesController
             Title = g.Title,
             IsReleased = g.IsReleased,
             Price = g.Price,
+            ReleaseDate = g.ReleaseDate,
             PublisherName = g.Publisher != null ? g.Publisher.Name : string.Empty,
             DeveloperNames = g.Developers.Select(d => d.Name).ToList(),
             PlatformNames = g.Platforms.Select(p => p.Name).ToList()
@@ -50,6 +51,7 @@ public partial class VideoGamesController
             Title = videoGame.Title,
             IsReleased = videoGame.IsReleased,
             Price = videoGame.Price,
+            ReleaseDate = videoGame.ReleaseDate,
             PublisherName = videoGame.Publisher != null ? videoGame.Publisher.Name : string.Empty,
             DeveloperNames = videoGame.Developers.Select(d => d.Name).ToList(),
             PlatformNames = videoGame.Platforms.Select(p => p.Name).ToList()

@@ -27,7 +27,8 @@ public class DevelopersController : ControllerBase
         var developersDto = developers.Select(d => new DeveloperReadDto
         {
             Id = d.Id,
-            Name = d.Name
+            Name = d.Name,
+            FoundedDate = d.FoundedDate
         }).ToList();
 
         return Ok(developersDto);
@@ -46,7 +47,8 @@ public class DevelopersController : ControllerBase
         var responseDto = new DeveloperReadDto
         {
             Id = developer.Id,
-            Name = developer.Name
+            Name = developer.Name,
+            FoundedDate = developer.FoundedDate
         };
 
         return Ok(responseDto);
