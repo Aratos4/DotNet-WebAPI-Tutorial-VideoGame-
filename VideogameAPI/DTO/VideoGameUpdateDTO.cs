@@ -1,7 +1,8 @@
 ﻿namespace VideogameAPI.DTO;
 
-public class VideoGameCreateDto
+public class VideoGameUpdateDto
 {
+    public int Id { get; set; }
     public string Title { get; set; } = string.Empty;
     public bool IsReleased { get; set; }
     public decimal Price { get; set; }
